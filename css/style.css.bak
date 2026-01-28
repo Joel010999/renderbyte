@@ -1,0 +1,898 @@
+/* BRUTALIST RESET */
+:root {
+    --bg-color: #0a0a0f;
+    /* RenderByte Dark Blue/Black */
+    --text-color: #ffffff;
+    --accent-color: #9333ea;
+    /* RenderByte Purple */
+    --accent-secondary: #ec4899;
+    /* RenderByte Pink */
+    --accent-gradient: linear-gradient(135deg, #9333ea 0%, #ec4899 100%);
+    --accent-hover: #ffffff;
+    --font-display: 'Anton', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --spacing-unit: 1rem;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    background-color: var(--bg-color);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+ul {
+    list-style: none;
+}
+
+/* TYPOGRAPHY UTILS */
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+}
+
+/* ANIMATIONS */
+.reveal-pending {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: all 0.8s cubic-bezier(0.1, 0.7, 0.1, 1);
+}
+
+.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* HERO SECTION (STICKY 3D CUBE) */
+.hero-section {
+    height: 400vh;
+    /* Scroll track length */
+    position: relative;
+    background-color: var(--bg-color);
+}
+
+.sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1200px;
+    background-image: url('../assets/hero_bg.png');
+    background-size: cover;
+    background-position: center;
+    transition: background-image 0.5s ease-in-out;
+}
+
+#hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#hero-video.video-active {
+    opacity: 1;
+}
+
+
+
+.cube-wrapper {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    transform-style: preserve-3d;
+    /* Responsive sizing */
+}
+
+@media (min-width: 768px) {
+    .cube-wrapper {
+        transform: scale(1.5);
+    }
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transition: transform 0.1s linear;
+    /* JavaScript will drive this */
+}
+
+.cube-face {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color);
+    /* Opaque bg for seamless edges */
+    color: white;
+    backface-visibility: hidden;
+    /* See through slightly */
+    box-shadow: 0 0 50px rgba(147, 51, 234, 0.1);
+}
+
+.face-content {
+    text-align: center;
+}
+
+.face-content h3 {
+    font-size: 3rem;
+    margin: 0;
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: var(--accent-gradient);
+    line-height: 1;
+}
+
+.face-content p {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: #aaa;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* Face Transforms */
+.cube-face.front {
+    transform: rotateY(0deg) translateZ(75px);
+}
+
+.cube-face.back {
+    transform: rotateY(180deg) translateZ(75px);
+}
+
+.cube-face.right {
+    transform: rotateY(90deg) translateZ(75px);
+}
+
+.cube-face.left {
+    transform: rotateY(-90deg) translateZ(75px);
+}
+
+.cube-face.top {
+    transform: rotateX(90deg) translateZ(75px);
+    background-color: var(--bg-color);
+    color: #fff;
+}
+
+.cube-face.bottom {
+    transform: rotateX(-90deg) translateZ(75px);
+}
+
+.price-card:hover .plan-tag {
+    background: var(--accent-gradient);
+    color: #fff;
+}
+
+.price-card:hover .btn-brutal {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+
+.price-card:hover .plan-features li {
+    border-color: var(--accent-color);
+    /* Keep simple line color or gradient border-bottom if possible, but keep simple for now */
+    border-image: var(--accent-gradient) 1;
+}
+
+.huge-link:hover {
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    background-image: var(--accent-gradient);
+    transform: translateX(20px);
+}
+
+.cube-face.bottom {
+    transform: rotateX(-90deg) translateZ(75px);
+}
+
+.cube-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* mix-blend-mode removed to show true colors */
+}
+
+.scroll-instruction {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: blink 2s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* BUTTONS */
+.btn-brutal {
+    display: inline-block;
+    padding: 1.5rem 3rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    text-align: center;
+    transition: all 0.2s cubic-bezier(0.1, 0.7, 0.1, 1);
+    border: 2px solid var(--text-color);
+}
+
+.btn-fill {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+.btn-fill:hover {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #000;
+    transform: translate(-4px, -4px);
+    box-shadow: 4px 4px 0px var(--text-color);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+}
+
+/* SERVICES SECTION */
+/* SERVICES SECTION (HORIZONTAL SCROLL) */
+.services-section {
+    height: 500vh;
+    /* Provides the scroll "track" length */
+    position: relative;
+    background-color: var(--bg-color);
+}
+
+.sticky-wrapper {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.marquee-wrapper {
+    overflow: hidden;
+    background: #000;
+    color: var(--text-color);
+    padding: 10px 0;
+    /* Keeps marquee at top */
+    z-index: 10;
+}
+
+.marquee {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    /* Spacing between images */
+    animation: marquee 20s linear infinite;
+}
+
+.marquee-logo {
+    height: 35px !important;
+    max-height: 35px !important;
+    width: auto;
+    filter: none;
+    opacity: 0.8;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.horizontal-track {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: max-content;
+    /* allow it to grow horizontally */
+    transform: translateX(0);
+    /* Will be animated by JS */
+    will-change: transform;
+}
+
+.service-item {
+    border-right: 2px solid #333;
+    /* Vertical separator */
+    width: 80vw;
+    height: 100%;
+    /* Full height minus marquee if needed, but 100% ok for now */
+    padding: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-color);
+    flex-shrink: 0;
+    /* Important! */
+    position: relative;
+}
+
+.service-number {
+    font-family: var(--font-display);
+    font-size: 8rem;
+    color: #222;
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    line-height: 1;
+}
+
+.service-item:hover {
+    background-color: #0f0f15;
+}
+
+.service-item:hover .service-title {
+    color: var(--accent-color);
+    /* Interaction */
+}
+
+.service-title {
+    font-size: clamp(3rem, 8vw, 10rem);
+    margin-bottom: 2rem;
+    line-height: 1.1;
+    /* Fix overlap */
+
+    /* GRADIENT TEXT */
+    background-image: linear-gradient(90deg, #9C2BE8, #E940A7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Essential for text clip */
+    /* Ensure parent doesn't hide children if transforms vary */
+    transform-style: preserve-3d;
+}
+
+/* SPLIT TEXT STYLES */
+.split-text-container {
+    overflow: hidden;
+    /* Hide initial state */
+}
+
+.split-word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
+    will-change: transform, opacity;
+
+    /* Preserve spacing */
+    white-space: pre-wrap;
+    vertical-align: bottom;
+    /* Align correctly */
+}
+
+/* Trigger animation when parent has .active */
+.service-item.active .split-word {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: calc(var(--index) * 30ms);
+    /* Faster stagger */
+}
+
+/* Apply gradient to the SPANS in the title to ensure visibility during transform */
+.service-title .split-word {
+    background-image: linear-gradient(90deg, #9C2BE8, #E940A7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.service-desc {
+    max-width: 600px;
+    font-size: 1.5rem;
+    margin-left: 0;
+    /* Reset from previous */
+    border-left: 4px solid #9C2BE8;
+    padding-left: 2rem;
+}
+
+.service-desc p {
+    /* Remove gradient from parent to avoid clipping issues with inline-block children */
+    margin: 0;
+}
+
+.service-desc .split-word {
+    /* Apply gradient to words */
+    background: linear-gradient(90deg, #9C2BE8, #E940A7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    transition-delay: calc((var(--index) * 10ms) + 200ms);
+}
+
+.service-item.active .service-desc .split-word {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+
+/* PORTFOLIO SECTION */
+.portfolio-section {
+    padding: 0 2rem;
+    /* Remove top padding to let sticky header hit top flush or control it in header */
+    padding-bottom: 4rem;
+}
+
+.section-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--bg-color);
+    /* Opaque background to hide scrolling items */
+    padding-top: 4rem;
+    /* Restore visual padding */
+    padding-bottom: 2rem;
+    margin-bottom: 4rem;
+}
+
+.section-header h2 {
+    font-size: clamp(3rem, 10vw, 12rem);
+    margin-bottom: 0;
+    /* Remove margin here, handle in header container */
+    border-bottom: 2px solid white;
+    /* Gradient on border too? Maybe keep white for contrast or make gradient */
+    border-image: var(--accent-gradient) 1;
+    padding-bottom: 2rem;
+
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.project-item {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    /* Asymmetric grid */
+    gap: 4rem;
+    margin-bottom: 15vh;
+    align-items: center;
+}
+
+@media (max-width: 992px) {
+    .project-item {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+.project-info h3 {
+    font-size: clamp(2rem, 5vw, 5rem);
+    margin-bottom: 1rem;
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.project-info p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 400px;
+    opacity: 1;
+    /* Reset opacity to let gradient shine */
+
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.project-link {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 1rem 2rem;
+    display: inline-block;
+    transition: 0.3s;
+
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    border-image: var(--accent-gradient) 1;
+}
+
+.project-link:hover {
+    background: var(--accent-gradient);
+    color: white;
+    /* Text becomes white on hover */
+    -webkit-text-fill-color: white;
+}
+
+.project-visual {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    border: 1px solid #333;
+    transition: transform 0.5s, border-color 0.3s;
+}
+
+.project-item:hover .project-visual {
+    transform: scale(0.98);
+    border-color: var(--accent-color);
+}
+
+/* PRICING PLANS */
+.pricing-section {
+    padding: 6rem 1rem;
+    background-color: var(--bg-color);
+    /* Dark */
+    color: var(--text-color);
+}
+
+.huge-title {
+    font-size: clamp(2rem, 12.5vw, 12.5rem);
+    /* Reduced by 50% */
+    text-align: center;
+    line-height: 0.8;
+    margin-bottom: 1rem;
+    /* Reduced margin to fit subtitle */
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: -0.5rem;
+    /* Adjusted tracking */
+}
+
+.section-subtitle {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 6vw, 6rem);
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 0;
+    /* No gap, borders handled by outline/border */
+    border-top: 4px solid var(--text-color);
+}
+
+.price-card {
+    background-color: transparent;
+    /* Dark */
+    color: var(--text-color);
+    /* White text */
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 50vh;
+    border-right: 4px solid var(--text-color);
+    border-bottom: 4px solid var(--text-color);
+    transition: all 0.2s;
+    position: relative;
+    /* border-image: var(--accent-gradient) 1;  Optional: gradient borders */
+}
+
+.price-card:hover {
+    background-color: #111;
+}
+
+/* PRICING LAYOUT RESTORED */
+.plan-header h3 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.plan-tag {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+
+.plan-features {
+    margin: 2rem 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.plan-features li {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 0;
+}
+
+.plan-description {
+    font-size: 1rem;
+    margin: 1rem 0 2rem 0;
+    line-height: 1.5;
+    opacity: 0.8;
+}
+
+.plan-result {
+    margin-top: auto;
+    /* Push to bottom if flex container */
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #111;
+    border-left: 4px solid var(--accent-color);
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+/* FOOTER LAYOUT RESTORED */
+.footer-section {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+    border-top: 2px solid white;
+    border-image: var(--accent-gradient) 1;
+}
+
+.footer-content h2 {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.huge-link {
+    font-size: clamp(2rem, 6vw, 8rem);
+    font-family: var(--font-display);
+    transition: all 0.2s;
+    line-height: 1;
+
+    /* Gradient Text */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.footer-meta {
+    margin-top: 4rem;
+    font-size: 1rem;
+    color: #666;
+    text-transform: uppercase;
+    /* Gradient Text for footer copyright too? */
+    background-image: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* GLOBAL TYPOGRAPHY */
+    h1 {
+        font-size: 15vw;
+    }
+
+    h2 {
+        font-size: 12vw;
+    }
+
+    h3 {
+        font-size: 2.5rem;
+    }
+
+    /* HERO SECTION */
+    .hero-section {
+        height: 300vh;
+        /* Reduce scroll track on mobile */
+    }
+
+    .cube-wrapper {
+        transform: scale(0.8);
+        /* Shrink cube */
+    }
+
+    .face-content h3 {
+        font-size: 2rem;
+    }
+
+    .scroll-instruction {
+        bottom: 5rem;
+        /* Avoid overlapping with browser bars */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        text-align: center;
+        font-size: 0.8rem;
+    }
+
+    /* SERVICES SECTION - VERTICAL STACK */
+    .services-section {
+        height: auto;
+        /* Remove scroll track */
+        padding-bottom: 4rem;
+    }
+
+    .sticky-wrapper {
+        position: relative;
+        /* Disable sticky */
+        height: auto;
+        top: auto;
+        overflow: visible;
+    }
+
+    .horizontal-track {
+        flex-direction: column;
+        /* Vertical stack */
+        width: 100%;
+        transform: none !important;
+        /* Disable JS transform */
+    }
+
+    .service-item {
+        width: 100%;
+        height: auto;
+        min-height: 50vh;
+        border-right: none;
+        border-bottom: 2px solid #333;
+        padding: 2rem;
+    }
+
+    .service-number {
+        font-size: 4rem;
+        top: 2rem;
+        right: 2rem;
+    }
+
+    .service-title {
+        font-size: 4rem;
+        margin-top: 2rem;
+        /* Make space for number */
+    }
+
+    .service-desc {
+        max-width: 100%;
+        font-size: 1.1rem;
+        padding-left: 1rem;
+    }
+
+    /* PORTFOLIO SECTION */
+    .section-header h2 {
+        font-size: 15vw;
+        /* Clamp was a bit aggressive */
+    }
+
+    .project-item {
+        margin-bottom: 4rem;
+        gap: 2rem;
+        grid-template-columns: 1fr;
+        /* Stack vertically */
+    }
+
+    .project-item:nth-child(even) {
+        /* Reorder visual/text if needed, but flex/grid 'dense' or simple stack usually fine. 
+           Current HTML structure: info then image.
+           If we want image first: flex-direction: column-reverse? 
+           Grid is strictly defined. Let's leave as is (Info then Image) for now.
+        */
+    }
+
+    /* PRICING SECTION */
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        /* Full width cards */
+    }
+
+    .price-card {
+        padding: 2rem;
+        min-height: auto;
+        /* Let content dictate height */
+        border-right: none;
+        border-bottom: 4px solid var(--bg-color);
+    }
+
+    .huge-title {
+        font-size: 20vw;
+        /* Fit screen */
+    }
+
+    /* FOOTER */
+    .huge-link {
+        font-size: 10vw;
+        /* Prevent overflow */
+        word-break: break-all;
+        /* Ensure email breaks if too long */
+    }
+
+    .footer-content h2 {
+        font-size: 2rem;
+    }
+}
